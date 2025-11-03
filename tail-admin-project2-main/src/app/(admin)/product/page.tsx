@@ -12,27 +12,29 @@ export default function ProductPage() {
 
   const loadProducts = async () => {
     const query = new URLSearchParams();
-    if(search) query.append("search", search);
-    if(filterActive) query.append("isActive", filterActive);
+    if (search) query.append("search", search);
+    if (filterActive) query.append("isActive", filterActive);
     const res = await fetch(`http://localhost:3000/products?${query.toString()}`);
     const data = await res.json();
     setProducts(data);
   };
 
-  useEffect(() => { loadProducts(); }, [search, filterActive]);
+  useEffect(() => {
+    loadProducts();
+  }, [search, filterActive]);
 
   const handleCreateOrUpdate = async (product: any) => {
-    if(product.id) {
+    if (product.id) {
       await fetch(`http://localhost:3000/products/${product.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(product)
+        body: JSON.stringify(product),
       });
     } else {
       await fetch("http://localhost:3000/products", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(product)
+        body: JSON.stringify(product),
       });
     }
     setEditing(undefined);
@@ -40,7 +42,7 @@ export default function ProductPage() {
   };
 
   const handleDelete = async (id: number) => {
-    if(!confirm("Are you sure?")) return;
+    if (!confirm("Are you sure?")) return;
     await fetch(`http://localhost:3000/products/${id}`, { method: "DELETE" });
     loadProducts();
   };
@@ -52,8 +54,8 @@ export default function ProductPage() {
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Products</h1>
+    <div className="p-6">
+      <h1 className="text-3xl font-bold mb-4">🛍️ Product Management</h1>
       <ProductFilter
         search={search}
         setSearch={setSearch}

@@ -14,7 +14,7 @@ export async function createCustomer(data: any) {
   return res.json();
 }
 
-export async function updateCustomer(id: number, data: any) {   // ✅ thêm hàm này
+export async function updateCustomer(id: number, data: any) {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

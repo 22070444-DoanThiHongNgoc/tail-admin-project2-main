@@ -7,27 +7,33 @@ import {
   CardHeader,
   CardTitle,
   CardContent,
-  CardFooter,
 } from "@/components/ui/card";
 
 export default function ProductForm({ product, onSubmit }: any) {
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    price: 0,
-    quantity: 0,
-    image: "",
-    isActive: true,
-  });
+const [form, setForm] = useState({
+  name: "",
+  description: "",
+  price: 0,
+  quantity: 0,
+  image: "",
+  isActive: true,
+  category: "", // ✅ thêm dòng này thay thế
+});
+
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [categories, setCategories] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (product) {
-      setForm(product);
-      setImagePreview(product.image || null);
-    }
-  }, [product]);
+  // Load dữ liệu khi edit hoặc khi mở form
+useEffect(() => {
+  if (product) {
+    setForm(product);
+    setImagePreview(
+      product.image ? `http://localhost:3000${product.image}` : null
+    );
+  }
+}, [product]);
+
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -53,13 +59,14 @@ export default function ProductForm({ product, onSubmit }: any) {
     e.preventDefault();
     onSubmit(form);
     setForm({
-      name: "",
-      description: "",
-      price: 0,
-      quantity: 0,
-      image: "",
-      isActive: true,
-    });
+  name: "",
+  description: "",
+  price: 0,
+  quantity: 0,
+  image: "",
+  isActive: true,
+  category: "", 
+});
     setImagePreview(null);
   };
 
@@ -154,6 +161,21 @@ export default function ProductForm({ product, onSubmit }: any) {
               />
             )}
           </div>
+
+          {/* Category */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Category
+  </label>
+  <input
+    name="category"
+    value={form.category || ""}
+    onChange={handleChange}
+    placeholder="Enter category (e.g. Road Bike)"
+    className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500"
+  />
+</div>
+
 
           {/* Status */}
           <div>
