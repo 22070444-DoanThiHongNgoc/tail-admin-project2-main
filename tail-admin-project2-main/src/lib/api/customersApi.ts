@@ -1,28 +1,7 @@
-const BASE_URL = "http://localhost:3000/customers";
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
 export async function getCustomers() {
-  const res = await fetch(BASE_URL);
+  const res = await fetch(`${BASE_URL}/customers`);
+  if (!res.ok) throw new Error("Failed to load customers");
   return res.json();
-}
-
-export async function createCustomer(data: any) {
-  const res = await fetch(BASE_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-}
-
-export async function updateCustomer(id: number, data: any) {
-  const res = await fetch(`${BASE_URL}/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-}
-
-export async function deleteCustomer(id: number) {
-  await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
 }

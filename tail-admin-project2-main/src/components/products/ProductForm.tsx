@@ -17,7 +17,7 @@ const [form, setForm] = useState({
   quantity: 0,
   image: "",
   isActive: true,
-  category: "", // ✅ thêm dòng này thay thế
+  category: "", 
 });
 
 
